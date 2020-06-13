@@ -27,7 +27,6 @@ const QuestionCreate = () => {
 
   useEffect(() => {
     loading && dispatch({ type: 'toggleLoading' });
-    console.log('estoy')
   }, [loading, dispatch]);
 
   if (redirectHome) {
