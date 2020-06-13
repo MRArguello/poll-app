@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Question } from '../types';
-import calculatePercentage from '../helpers/calculatePercentage';
+import { Question, VoteFormValueType } from '../types';
+import VoteForm from '../components/VoteForm';
 import addVotes from '../helpers/addVotes';
 import { useParams, Redirect } from "react-router-dom";
 import { useStateValue } from '../context/context';
@@ -11,7 +11,8 @@ const QuestionDetail = () => {
   const [context, dispatch] = useStateValue();
   const { loading, error, questions } = context;
 
-  const totalVotes = currentQuestion && addVotes(currentQuestion.choices);
+  const totalVotes = currentQuestion ? addVotes(currentQuestion.choices) : 0;
+  const castVote = (values: VoteFormValueType) => console.log(values);
 
   useEffect(() => {
     loading && dispatch({ type: 'toggleLoading' });
@@ -31,13 +32,7 @@ const QuestionDetail = () => {
           {currentQuestion && (
             <>
               <h1 className="title is-3">Question: {currentQuestion.question}</h1>
-              {currentQuestion.choices.map(({choice, votes}) =>
-                <div key={choice}>
-                  <p>{choice}</p>
-                  <p>{votes}</p>
-                  {totalVotes && <p>{calculatePercentage(totalVotes, votes)}</p>}
-                </div>
-              )}
+              <VoteForm {...{ choices: currentQuestion.choices, totalVotes: totalVotes, sendVote: castVote }} />
             </>
           )}
         </div>

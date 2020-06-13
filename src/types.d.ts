@@ -28,4 +28,14 @@ export type ActionsType = {
   payload: any
 }
 
+export type VoteFormProps = {
+  sendVote: (values: any) => void
+  choices: Choice[]
+  totalVotes: number
+}
+
+export type VoteFormValueType = {
+  choice: string;
+}
+
 export type getQuestionsCallbackType = (questions: Question[], error?: string) => void;
