@@ -38,6 +38,11 @@ export const updateContextReducer = (state: StateType, action: ActionsType) => {
         ...state,
         questions: updateQuestionHelper(state.questions, action.payload.updatedChoice, action.payload.questionToUpdate)
       }
+    case 'addNewQuestion':
+      return {
+        ...state,
+        questions: [...state.questions, action.payload]
+      }
     default:
       return state;
   }

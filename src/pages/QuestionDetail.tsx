@@ -41,7 +41,7 @@ const QuestionDetail = () => {
   return (
     <div className="container is-widescreen">
       {!loading && success && <div className="notification is-primary">Vote casted succesfully</div>}
-      {!loading && error ? <span data-testid="error-element">{error}</span> : questions && (
+      {!loading && error ? <span className="help is-danger" data-testid="error-element">{error}</span> : questions && (
         <div className="container is-widescreen">
           {currentQuestion && (
             <>

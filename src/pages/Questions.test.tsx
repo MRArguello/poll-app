@@ -21,7 +21,7 @@ const renderPage = (state: StateType) => (
 describe('Questions Page', () => {
   it('Renders loading initial state', () => {
     const { getByTestId } = renderPage({
-      questions: undefined,
+      questions: [],
       loading: true,
       error: undefined
     });
@@ -33,7 +33,7 @@ describe('Questions Page', () => {
 
   it('Displays error on the page', () => {
     const { getByTestId } = renderPage({
-      questions: undefined,
+      questions: [],
       loading: false,
       error: 'error message'
     });

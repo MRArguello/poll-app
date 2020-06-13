@@ -24,19 +24,34 @@ export type StateType = {
 }
 
 export type ActionsType = {
-  type: 'setQuestions' | 'toggleLoading' | 'setError' | 'updateQuestion'
+  type: 'setQuestions' | 'toggleLoading' | 'setError' | 'updateQuestion' | 'addNewQuestion'
   payload: any
 }
 
 export type VoteFormProps = {
-  sendVote: (values: any) => void
+  sendVote: (values: VoteFormValueType) => void
   choices: Choice[]
   totalVotes: number
+}
+
+export type QuestionFormProps = {
+  sendQuestion: (values: processedQuestionFormValuesType) => void
 }
 
 export type VoteFormValueType = {
   choice: string;
 }
 
+export type QuestionFormValueType = {
+  question: string;
+  choices: string;
+}
+
+export type processedQuestionFormValuesType = {
+  question: string;
+  choices: string[];
+}
+
 export type getQuestionsCallbackType = (questions: Question[], error?: string) => void
 export type voteOnQuestionCallbackType = (updatedChoice: Choice, error?: string) => void
+export type QuestionFormCallbackType = (newQuestion: Question, error?: string) => void

@@ -3,6 +3,7 @@ import 'bulma/css/bulma.css';
 import Questions from './pages/Questions';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import QuestionDetail from './pages/QuestionDetail';
+import QuestionCreate from './pages/QuestionCreate';
 import { StateType } from './types';
 import { StateProvider } from './context/context';
 import { updateContextReducer } from './context/reducer';
@@ -23,6 +24,7 @@ const App = () => (
           <Switch>
             <Route exact path="/" component={Questions} />
             <Route exact path="/questions/:id" component={QuestionDetail} />
+            <Route path="/create" component={QuestionCreate} />
           </Switch>
         </Router>
       </section>

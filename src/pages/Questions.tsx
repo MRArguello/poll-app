@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
+import { Link } from "react-router-dom";
 import { Question, getQuestionsCallbackType } from '../types';
 import QuestionSummary from '../components/QuestionSummary';
 import { useStateValue } from '../context/context';
@@ -20,7 +21,7 @@ const Questions = () => {
   }, [dispatch, loading])
 
   useEffect(() => {
-    if (questions.length < 1) {
+    if (questions.length <= 1) {
       GetQuestions(getQuestionsCallback);
     } else if (loading) {
       dispatch({ type: 'toggleLoading' });
@@ -30,8 +31,8 @@ const Questions = () => {
   return (
     <div className="container is-widescreen">
       {loading && <span data-testid="loading-element">loading...</span>}
-      {!loading && <h1 className="title is-3">All Questions</h1>}
-      {!loading && error ? <span data-testid="error-element">{error}</span> : questions && (
+      {!loading && <> <h1 className="title is-3">All Questions</h1> <Link className="button" to="/create">Create new question</Link> </>}
+      {!loading && error ? <span className="help is-danger" data-testid="error-element">{error}</span> : questions && (
         <div className="question-container">
           {questions.map((currentQuestion: Question) => (
             <QuestionSummary key={currentQuestion.published_at} {...currentQuestion} />
