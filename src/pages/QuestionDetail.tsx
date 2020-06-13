@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Question, Choice } from '../types';
+import { Question } from '../types';
 import calculatePercentage from '../helpers/calculatePercentage';
+import addVotes from '../helpers/addVotes';
 import { useParams, Redirect } from "react-router-dom";
 import { useStateValue } from '../context/context';
 
@@ -10,23 +11,11 @@ const QuestionDetail = () => {
   const [context, dispatch] = useStateValue();
   const { loading, error, questions } = context;
 
-  const reducer = (acc: number, current: Choice) => {
-    if (current.votes) {
-      return acc + current.votes
-    }
-    return acc;
-  }
-
-  const totalVotes = currentQuestion?.choices.reduce(reducer, 0);
-
+  const totalVotes = currentQuestion && addVotes(currentQuestion.choices);
 
   useEffect(() => {
-    if (loading) {
-      dispatch({ type: 'toggleLoading' });
-    }
-    if (questions) {
-      setCurrentQuestion(questions.find((question: Question) => question.url === `/questions/${id}`))
-    }
+    loading && dispatch({ type: 'toggleLoading' });
+    questions && setCurrentQuestion(questions.find((question: Question) => question.url === `/questions/${id}`));
   }, [currentQuestion, loading, context, id, questions, dispatch])
 
   if (!questions) {
