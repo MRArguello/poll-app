@@ -33,7 +33,7 @@
         width: calc(25% - 1rem);
       }
 
-      &:nth-child(5n) {
+      &:nth-child(4n) + div {
         margin-left: 0;
         width: calc(25% - 1rem);
       }
@@ -43,4 +43,29 @@
       }
     }
   }
+}
+
+
+input[type='radio'] {
+  visibility: hidden;
+}
+
+label {
+  cursor: pointer;
+}
+
+input[type='radio']:checked + label {
+  background: hsl(0, 0%, 96%);
+}
+
+.percentage-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.votes-value {
+  margin-right: 1rem;
+  min-width: 6rem;
+  font-weight: bold;
 }

@@ -28,19 +28,31 @@ const VoteForm: FunctionComponent<VoteFormProps> = ({ sendVote, choices, totalVo
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>Choices</label>
-      {choices.map(({ choice, votes, url }) =>
-        <label htmlFor={choice} key={choice}>
-          <p>{choice}</p>
-          <p>{votes}</p>
-          {totalVotes && <p>{calculatePercentage(totalVotes, votes)}</p>}
-          <input {...choiceInput.input} type="radio" id={choice} value={url} />
-        </label>
-      )}
-      {choiceInput.meta.touched && choiceInput.meta.error && (
-        <span>{choiceInput.meta.error}</span>
-      )}
-      <button type="submit" disabled={pristine || submitting}>Send Vote</button>
+      <div className="columns is-multiline">
+        <div className="column is-full">
+          {choices.map(({ choice, votes, url }) =>
+            <div>
+              <input {...choiceInput.input} type="radio" id={choice} value={url} />
+              <label htmlFor={choice} key={choice} className="box">
+                <div className="columns">
+                  <div className="column is-2">
+                    <p className="title is-4">{choice}</p>
+                  </div>
+                  <div className="column is-6 is-offset-4 percentage-container">
+                    <p className="votes-value">Votes: {votes}</p><progress className="progress" value={calculatePercentage(totalVotes, votes)} max="100">{`${calculatePercentage(totalVotes, votes)}%`}</progress>
+                  </div>
+                </div>
+              </label>
+            </div>
+          )}
+        </div>
+        <div className="column is-full">
+          {choiceInput.meta.touched && choiceInput.meta.error && (
+            <span>{choiceInput.meta.error}</span>
+          )}
+          <button type="submit" className="button is-primary" disabled={pristine || submitting}>Send Vote</button>
+        </div>
+      </div>
     </form>
   )
 
