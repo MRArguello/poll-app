@@ -1,25 +1,18 @@
 import React from 'react';
 import 'bulma/css/bulma.css';
-import './App.css';
+import Questions from './pages/Questions';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import QuestionDetail from './pages/QuestionDetail';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <div className="container is-widescreen">
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Questions} />
+        <Route exact path="/questions/:id" component={QuestionDetail} />
+      </Switch>
+    </Router>
+  </div>
+);
 
 export default App;
