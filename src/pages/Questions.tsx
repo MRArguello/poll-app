@@ -27,9 +27,9 @@ const Questions = () => {
 
   return (
     <div className="container is-widescreen">
-      {loading && <span>loading...</span>}
+      {loading && <span data-testid="loading-element">loading...</span>}
       {!loading && <h1 className="title is-2">All Questions</h1>}
-      {!loading && error ? <span>{error}</span> : questions && (
+      {!loading && error ? <span data-testid="error-element">{error}</span> : questions && (
         <div className="question-container">
           {questions.map((currentQuestion: Question) => (
             <QuestionSummary key={currentQuestion.published_at} {...currentQuestion} />
