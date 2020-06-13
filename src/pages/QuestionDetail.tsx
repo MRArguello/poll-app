@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Question } from '../types';
+import { Question, Choice } from '../types';
+import calculatePercentage from '../helpers/calculatePercentage';
 import { useParams, Redirect } from "react-router-dom";
 import { useStateValue } from '../context/context';
 
@@ -8,6 +9,16 @@ const QuestionDetail = () => {
   const [currentQuestion, setCurrentQuestion] = useState<Question | undefined>();
   const [context, dispatch] = useStateValue();
   const { loading, error, questions } = context;
+
+  const reducer = (acc: number, current: Choice) => {
+    if (current.votes) {
+      return acc + current.votes
+    }
+    return acc;
+  }
+
+  const totalVotes = currentQuestion?.choices.reduce(reducer, 0);
+
 
   useEffect(() => {
     if (loading) {
@@ -21,6 +32,7 @@ const QuestionDetail = () => {
   if (!questions) {
     return <Redirect to='/' />
   }
+
   return (
     <>
       {loading && <span data-testid="loading-element">loading...</span>}
@@ -30,13 +42,15 @@ const QuestionDetail = () => {
           {currentQuestion && (
             <>
               <h1 className="title is-3">Question: {currentQuestion.question}</h1>
-              {currentQuestion.choices.map((choice) =>
-                <div key={choice.choice}>
-                  <p>{choice.choice}</p>
-                  <p>{choice.votes}</p>
+              {currentQuestion.choices.map(({choice, votes}) =>
+                <div key={choice}>
+                  <p>{choice}</p>
+                  <p>{votes}</p>
+                  {totalVotes && <p>{calculatePercentage(totalVotes, votes)}</p>}
                 </div>
               )}
-            </>)}
+            </>
+          )}
         </div>
       )}
     </>
