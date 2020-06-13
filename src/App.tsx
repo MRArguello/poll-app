@@ -10,8 +10,8 @@ import { updateContextReducer } from './context/reducer';
 import './App.scss';
 
 const initialState: StateType = {
-  questions: [],
-  loading: false,
+  questions: undefined,
+  loading: true,
   error: undefined
 };
 

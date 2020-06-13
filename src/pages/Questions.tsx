@@ -1,29 +1,41 @@
 import React, { useEffect } from 'react';
-import { Question } from '../types';
+import { Question, getQuestionsCallbackType } from '../types';
 import QuestionSummary from '../components/QuestionSummary';
 import { useStateValue } from '../context/context';
 import { GetQuestions } from '../services/QuestionService';
 
 const Questions = () => {
   const [context, dispatch] = useStateValue();
-  const { questions } = context;
+  const { loading, error, questions } = context;
 
-  const GetQuestionsCallback = (data: Question[]) => {
-    console.log(data)
+  const getQuestionsCallback: getQuestionsCallbackType = (questions, error) => {
+    dispatch({ type: 'toggleLoading' });
+
+    if (error) {
+      return dispatch({ type: 'setError', payload: error });
+    }
+
+    dispatch({ type: 'setQuestions', payload: questions });
   }
-
   useEffect(() => {
-    GetQuestions(GetQuestionsCallback);
+    if (!questions || questions.length < 1) {
+      GetQuestions(getQuestionsCallback);
+    } else if (loading) {
+      dispatch({ type: 'toggleLoading' });
+    }
   }, []);
 
   return (
     <div className="container is-widescreen">
-      <h1 className="title is-2">All Questions</h1>
-      <div className="question-container">
-        {questions.map((currentQuestion: Question) => (
-          <QuestionSummary key={currentQuestion.published_at} {...currentQuestion} />
-        ))}
-      </div>
+      {loading && <span>loading...</span>}
+      {!loading && <h1 className="title is-2">All Questions</h1>}
+      {!loading && error ? <span>{error}</span> : questions && (
+        <div className="question-container">
+          {questions.map((currentQuestion: Question) => (
+            <QuestionSummary key={currentQuestion.published_at} {...currentQuestion} />
+          ))}
+        </div>
+      )}
     </div>
   )
 };

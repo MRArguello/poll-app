@@ -14,16 +14,18 @@ export type Choice = {
 export type StateProviderProps = {
   reducer: any
   initialState: ContextType
-  children: any
+  children: React.ReactNode
 }
 
 export type StateType = {
-  questions: Question[]
+  questions?: Question[]
   loading: boolean
   error?: string
 }
 
 export type ActionsType = {
-  type: 'getQuestions' | 'toggleLoading' | 'setError'
+  type: 'setQuestions' | 'toggleLoading' | 'setError'
   payload: any
 }
+
+export type getQuestionsCallbackType = (questions: Question[], error?: string) => void;

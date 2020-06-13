@@ -1,15 +1,15 @@
-import { Question } from '../types';
+import { getQuestionsCallbackType } from '../types';
 
-export const GetQuestions = async (callback: (questions: Question[]) => void) => {
-  fetch('https://polls.apiblueprint.org/questions')
+export const GetQuestions = (callback: getQuestionsCallbackType) => {
+  return fetch('https://polls.apiblueprint.org/questions')
     .then(handleErrors)
     .then(res => res.json())
     .then(
       (result) => {
-        callback(result);
+        callback(result)
       },
       (error) => {
-        console.log(error.message)
+        callback([], error.message)
       }
     )
 };

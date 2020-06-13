@@ -1,4 +1,4 @@
-import  { StateType, ActionsType } from '../types';
+import { StateType, ActionsType } from '../types';
 
 export const updateContextReducer = (state: StateType, action: ActionsType) => {
   console.log(state);
@@ -15,7 +15,7 @@ export const updateContextReducer = (state: StateType, action: ActionsType) => {
         ...state,
         error: action.payload,
       };
-    case 'getQuestions':
+    case 'setQuestions':
       console.log('getting questions');
       return {
         ...state,
