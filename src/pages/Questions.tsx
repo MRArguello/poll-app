@@ -60,11 +60,14 @@ const mockQuestions: Question[] = [
 ];
 
 const Questions = () => (
-  <div>
-    <p>Questions page </p>
-    {mockQuestions.map((currentQuestion: Question) => (
-      <QuestionSummary {...currentQuestion} />
-    ))}
+
+  <div className="container is-widescreen">
+    <h1 className="title is-2">All Questions</h1>
+    <div className="question-container">
+      {mockQuestions.map((currentQuestion: Question) => (
+        <QuestionSummary {...currentQuestion} />
+      ))}
+    </div>
   </div>
 );
 
