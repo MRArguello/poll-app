@@ -17,28 +17,23 @@ const updateQuestionHelper = (questions: Question[], updatedChoice: Choice, ques
 };
 
 export const updateContextReducer = (state: StateType, action: ActionsType) => {
-  console.log(state);
   switch (action.type) {
     case 'toggleLoading':
-      console.log('loading');
       return {
         ...state,
         loading: !state.loading,
       };
     case 'setError':
-      console.log('error');
       return {
         ...state,
         error: action.payload,
       };
     case 'setQuestions':
-      console.log('getting questions');
       return {
         ...state,
         questions: action.payload,
       };
     case 'updateQuestion':
-      console.log('updating question');
       return {
         ...state,
         questions: updateQuestionHelper(state.questions, action.payload.updatedChoice, action.payload.questionToUpdate)
