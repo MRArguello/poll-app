@@ -18,13 +18,13 @@ export type StateProviderProps = {
 }
 
 export type StateType = {
-  questions?: Question[]
+  questions: Question[]
   loading: boolean
   error?: string
 }
 
 export type ActionsType = {
-  type: 'setQuestions' | 'toggleLoading' | 'setError'
+  type: 'setQuestions' | 'toggleLoading' | 'setError' | 'updateQuestion'
   payload: any
 }
 
@@ -38,4 +38,5 @@ export type VoteFormValueType = {
   choice: string;
 }
 
-export type getQuestionsCallbackType = (questions: Question[], error?: string) => void;
+export type getQuestionsCallbackType = (questions: Question[], error?: string) => void
+export type voteOnQuestionCallbackType = (updatedChoice: Choice, error?: string) => void

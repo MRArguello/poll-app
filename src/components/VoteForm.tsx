@@ -1,6 +1,5 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { useForm, useField } from 'react-final-form-hooks';
-import { Redirect } from "react-router-dom";
 import { VoteFormProps, VoteFormValueType } from '../types';
 import calculatePercentage from '../helpers/calculatePercentage';
 
@@ -15,11 +14,9 @@ const validate = (values: VoteFormValueType) => {
 };
 
 const VoteForm: FunctionComponent<VoteFormProps> = ({ sendVote, choices, totalVotes }) => {
-  const [redirectHome, toggleRedirectHome] = useState(false);
 
   const onSubmit = (values: VoteFormValueType) => {
     sendVote(values);
-    return toggleRedirectHome(!redirectHome);
   };
 
   const { form, handleSubmit, pristine, submitting } = useForm({
@@ -29,19 +26,15 @@ const VoteForm: FunctionComponent<VoteFormProps> = ({ sendVote, choices, totalVo
 
   const choiceInput = useField('choice', form);
 
-  if (redirectHome) {
-    return <Redirect to='/' />;
-  }
-
   return (
     <form onSubmit={handleSubmit}>
       <label>Choices</label>
-      {choices.map(({ choice, votes }) =>
+      {choices.map(({ choice, votes, url }) =>
         <label htmlFor={choice} key={choice}>
           <p>{choice}</p>
           <p>{votes}</p>
           {totalVotes && <p>{calculatePercentage(totalVotes, votes)}</p>}
-          <input {...choiceInput.input} type="radio" id={choice} value={choice} />
+          <input {...choiceInput.input} type="radio" id={choice} value={url} />
         </label>
       )}
       {choiceInput.meta.touched && choiceInput.meta.error && (

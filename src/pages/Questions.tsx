@@ -20,7 +20,7 @@ const Questions = () => {
   }, [dispatch, loading])
 
   useEffect(() => {
-    if (!questions || questions.length < 1) {
+    if (questions.length < 1) {
       GetQuestions(getQuestionsCallback);
     } else if (loading) {
       dispatch({ type: 'toggleLoading' });
